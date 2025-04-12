@@ -1,0 +1,1 @@
+web: uvicorn model_api.api:app --host 0.0.0.0 --port $PORT --limit-max-request-body 10485760
