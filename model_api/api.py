@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 import torch
 import io
+from pathlib import Path
 import os
 from model import unet
 
@@ -18,12 +19,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = unet(in_channels=4, num_classes=1).to(device)
 
-model_path = "pytorch_model.bin"
+current_dir = Path(__file__).parent
+
+model_path = current_dir / "pytorch_model.bin"
 if not os.path.exists(model_path):
     raise FileNotFoundError(f"Model weights file not found in {model_path}")
 
