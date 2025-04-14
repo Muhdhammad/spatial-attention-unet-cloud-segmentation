@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 from PIL import Image
 import torch
@@ -8,6 +9,15 @@ import os
 from model import unet
 
 app = FastAPI(title="Cloud Segmentation API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
